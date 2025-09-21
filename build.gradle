@@ -14,7 +14,7 @@ apply plugin: 'java'
 
 version = '0.1.0'
 group = 'com.mahghuuuls.mahghuuulszenutils'
-archivesBaseName = 'modid'
+archivesBaseName = 'mahghuuulszenutils'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -33,7 +33,7 @@ repositories {
 
 dependencies {
 	// CraftTweaker 1.12.2
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.671"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.709"
 }
 
 // Manifest

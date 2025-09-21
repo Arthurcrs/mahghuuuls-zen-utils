@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.cooldowntracker;
+package com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker;
 
 import java.util.Objects;
 

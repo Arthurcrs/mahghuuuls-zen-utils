@@ -1,17 +1,15 @@
-package com.mahghuuuls.mahghuuulszenutils.cooldowntracker;
+package com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker;
 
 import java.util.HashMap;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import com.mahghuuuls.mahghuuulszenutils.core.utils.ServerUtil;
 
 public class CooldownTracker {
 
 	private static HashMap<CooldownKey, CooldownData> activeCooldowns = new HashMap<>();
 
 	public static void startCooldown(String playerId, String cooldownId, long durationTicks) {
-		long currentTime = getServerTicks();
+		long currentTime = ServerUtil.getServerTicks();
 		CooldownKey cooldownKey = new CooldownKey(playerId, cooldownId);
 		activeCooldowns.put(cooldownKey, new CooldownData(durationTicks, currentTime));
 	}
@@ -24,7 +22,7 @@ public class CooldownTracker {
 			return false;
 		}
 
-		long currentTime = getServerTicks();
+		long currentTime = ServerUtil.getServerTicks();
 		long cooldownStartTime = cooldownData.startTime;
 		long cooldownDuration = cooldownData.durationTicks;
 		long elapsedTime = currentTime - cooldownStartTime;
@@ -35,12 +33,6 @@ public class CooldownTracker {
 
 		activeCooldowns.remove(cooldownKey);
 		return false;
-	}
-
-	private static long getServerTicks() {
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		WorldServer overworld = server.getWorld(0);
-		return overworld.getTotalWorldTime();
 	}
 
 }
