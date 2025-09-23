@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.mahghuuuls.mahghuuulszenutils.core.utils.ServerUtil;
+import com.mahghuuuls.mahghuuulszenutils.core.utils.TimeUtil;
 
 public class EntityMarkerTracker {
 
@@ -14,7 +14,7 @@ public class EntityMarkerTracker {
 
 	public static void markEntity(String playerUuid, String markId, String entityUuid, long markDuration) {
 		EntityMarkerKey key = new EntityMarkerKey(playerUuid, markId, entityUuid);
-		long startTime = ServerUtil.getServerTicks();
+		long startTime = TimeUtil.getServerTicks();
 		EntityMarkerData data = new EntityMarkerData(markDuration, startTime);
 		markedEntities.put(key, data);
 	}
@@ -32,7 +32,7 @@ public class EntityMarkerTracker {
 			return false;
 		}
 
-		long currentTime = ServerUtil.getServerTicks();
+		long currentTime = TimeUtil.getServerTicks();
 
 		if (isMarkActive(data, currentTime)) {
 			return true;
@@ -44,7 +44,7 @@ public class EntityMarkerTracker {
 
 	public static List<String> getMarkedEntityUuids(String playerUuid, String markId) {
 		List<String> result = new ArrayList<>();
-		long currentTime = ServerUtil.getServerTicks();
+		long currentTime = TimeUtil.getServerTicks();
 
 		for (Iterator<Map.Entry<EntityMarkerKey, EntityMarkerData>> iterator = markedEntities.entrySet()
 				.iterator(); iterator.hasNext();) {
