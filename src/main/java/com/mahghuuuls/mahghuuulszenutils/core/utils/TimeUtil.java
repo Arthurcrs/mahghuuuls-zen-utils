@@ -8,7 +8,7 @@ public class TimeUtil {
 
 	public static boolean hasTimeExpired(long startTime, long duration, long currentTime) {
 
-		long elapsedTime = getElapsedTime(currentTime, startTime);
+		long elapsedTime = currentTime - startTime;
 
 		if (elapsedTime < duration) {
 			return false;
@@ -16,10 +16,6 @@ public class TimeUtil {
 
 		return true;
 
-	}
-
-	public static long getElapsedTime(long startTime, long currentTime) {
-		return currentTime - startTime;
 	}
 
 	public static long getServerTicks() {
