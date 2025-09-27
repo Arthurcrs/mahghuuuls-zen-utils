@@ -7,6 +7,8 @@ import java.util.UUID;
 import com.mahghuuuls.mahghuuulszenutils.convert.CtToMc;
 import com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker.CooldownTracker;
 import com.mahghuuuls.mahghuuulszenutils.core.entitymarkertracker.EntityMarkerTracker;
+import com.mahghuuuls.mahghuuulszenutils.core.stacktracker.RefreshRule;
+import com.mahghuuuls.mahghuuulszenutils.core.stacktracker.StackTracker;
 
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.entity.IEntity;
@@ -56,6 +58,39 @@ public class IPlayerExpansions {
 		return entitiesWithTheMark.toArray(new IEntity[0]);
 	}
 
+	@ZenMethod
+	public static void addStacks(IPlayer iPlayer, String stackName, long durationTicks, String refreshRule,
+			int quantity) {
+		RefreshRule rule = RefreshRule.fromString(refreshRule);
+		StackTracker.addStacks(iPlayer.getUUID(), stackName, durationTicks, rule, quantity);
+	}
+
+	@ZenMethod
+	public static void removeStacks(IPlayer iPlayer, String stackName, long durationTicks, String refreshRule,
+			int quantity) {
+		RefreshRule rule = RefreshRule.fromString(refreshRule);
+		StackTracker.addStacks(iPlayer.getUUID(), stackName, durationTicks, rule, -1 * quantity);
+	}
+
+	@ZenMethod
+	public static void clearStacks(IPlayer iPlayer, String stackName) {
+		StackTracker.clearStacks(iPlayer.getUUID(), stackName);
+	}
+
+	@ZenMethod
+	public static int getStacksCount(IPlayer iPlayer, String stackName) {
+		return StackTracker.getStackCount(iPlayer.getUUID(), stackName);
+	}
+
+	@ZenMethod
+	public static void setStacks(IPlayer iPlayer, String stackName, long durationTicks, String refreshRule,
+			int quantity) {
+		String playerUuid = iPlayer.getUUID().toString();
+		int currentStacks = StackTracker.getStackCount(playerUuid, stackName);
+		RefreshRule rule = RefreshRule.fromString(refreshRule);
+		StackTracker.addStacks(playerUuid, stackName, durationTicks, rule, quantity - currentStacks);
+	}
+
 	private static Entity findEntity(UUID uuid) {
 
 		for (WorldServer worldServer : DimensionManager.getWorlds()) {
@@ -69,5 +104,4 @@ public class IPlayerExpansions {
 
 		return null;
 	}
-
 }
