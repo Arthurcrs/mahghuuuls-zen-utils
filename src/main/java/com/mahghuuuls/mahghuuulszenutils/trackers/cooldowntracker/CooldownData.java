@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.cooldowntracker;
 
 public class CooldownData {
 	public long durationTicks;

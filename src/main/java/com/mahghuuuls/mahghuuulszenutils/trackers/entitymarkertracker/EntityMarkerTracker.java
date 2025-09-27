@@ -1,20 +1,21 @@
-package com.mahghuuuls.mahghuuulszenutils.core.entitymarkertracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.entitymarkertracker;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-import com.mahghuuuls.mahghuuulszenutils.core.utils.TimeUtil;
+import com.mahghuuuls.mahghuuulszenutils.helpers.TimeHelper;
 
 public class EntityMarkerTracker {
 
-	private static HashMap<EntityMarkerKey, EntityMarkerData> markedEntities = new HashMap<>();
+	private static ConcurrentMap<EntityMarkerKey, EntityMarkerData> markedEntities = new ConcurrentHashMap<>();
 
 	public static void markEntity(String playerUuid, String markId, String entityUuid, long markDuration) {
 		EntityMarkerKey key = new EntityMarkerKey(playerUuid, markId, entityUuid);
-		long startTime = TimeUtil.getServerTicks();
+		long startTime = TimeHelper.getServerTicks();
 		EntityMarkerData data = new EntityMarkerData(markDuration, startTime);
 		markedEntities.put(key, data);
 	}
@@ -32,7 +33,7 @@ public class EntityMarkerTracker {
 			return false;
 		}
 
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 
 		if (isMarkActive(data, currentTime)) {
 			return true;
@@ -44,7 +45,7 @@ public class EntityMarkerTracker {
 
 	public static List<String> getMarkedEntityUuids(String playerUuid, String markId) {
 		List<String> result = new ArrayList<>();
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 
 		for (Iterator<Map.Entry<EntityMarkerKey, EntityMarkerData>> iterator = markedEntities.entrySet()
 				.iterator(); iterator.hasNext();) {
@@ -69,14 +70,7 @@ public class EntityMarkerTracker {
 
 		long markStartTime = data.startTime;
 		long markDuration = data.durationTicks;
-		long elapsedTime = currentTime - markStartTime;
 
-		if (elapsedTime < markDuration) {
-			return true;
-		}
-
-		return false;
-
+		return TimeHelper.hasDurationExpired(markStartTime, markDuration, currentTime);
 	}
-
 }

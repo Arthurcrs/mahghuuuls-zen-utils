@@ -33,7 +33,7 @@ iEntity.addStacks("Corruption", 200, "preserve", 1);
 ### removeStacks
 
 ```
-removeStacks(String stackName, int quantity);
+removeStacks(String stackName, long durationTicks, String refreshRule, int quantity);
 ```
 
 Remove {quantity} stacks of {stackName} that the player have.

@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.entitymarkertracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.entitymarkertracker;
 
 import java.util.Objects;
 
@@ -33,5 +33,4 @@ public class EntityMarkerKey {
 	public int hashCode() {
 		return Objects.hash(playerUuid, entityUuid, markId);
 	}
-
 }

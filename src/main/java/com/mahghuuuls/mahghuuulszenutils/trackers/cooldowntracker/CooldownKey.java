@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.cooldowntracker;
 
 import java.util.Objects;
 
@@ -30,5 +30,4 @@ public class CooldownKey {
 	public int hashCode() {
 		return Objects.hash(playerId, cooldownId);
 	}
-
 }

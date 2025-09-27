@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.stacktracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.stacktracker;
 
 import java.util.Objects;
 

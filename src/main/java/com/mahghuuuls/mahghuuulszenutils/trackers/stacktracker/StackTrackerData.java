@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.stacktracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.stacktracker;
 
 class StackTrackerData {
 	int stackCount;

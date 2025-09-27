@@ -1,15 +1,16 @@
-package com.mahghuuuls.mahghuuulszenutils.core.cooldowntracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.cooldowntracker;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-import com.mahghuuuls.mahghuuulszenutils.core.utils.TimeUtil;
+import com.mahghuuuls.mahghuuulszenutils.helpers.TimeHelper;
 
 public class CooldownTracker {
 
-	private static HashMap<CooldownKey, CooldownData> activeCooldowns = new HashMap<>();
+	private static ConcurrentMap<CooldownKey, CooldownData> activeCooldowns = new ConcurrentHashMap<>();
 
 	public static void startCooldown(String playerId, String cooldownId, long durationTicks) {
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 		CooldownKey cooldownKey = new CooldownKey(playerId, cooldownId);
 		activeCooldowns.put(cooldownKey, new CooldownData(durationTicks, currentTime));
 	}
@@ -22,7 +23,7 @@ public class CooldownTracker {
 			return false;
 		}
 
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 		long cooldownStartTime = cooldownData.startTime;
 		long cooldownDuration = cooldownData.durationTicks;
 		long elapsedTime = currentTime - cooldownStartTime;
@@ -34,5 +35,4 @@ public class CooldownTracker {
 		activeCooldowns.remove(cooldownKey);
 		return false;
 	}
-
 }

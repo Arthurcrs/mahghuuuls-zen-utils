@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.convert;
+package com.mahghuuuls.mahghuuulszenutils.helpers.converters;
 
 import java.util.List;
 

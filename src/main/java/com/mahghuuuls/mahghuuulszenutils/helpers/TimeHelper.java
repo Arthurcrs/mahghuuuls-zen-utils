@@ -1,12 +1,12 @@
-package com.mahghuuuls.mahghuuulszenutils.core.utils;
+package com.mahghuuuls.mahghuuulszenutils.helpers;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class TimeUtil {
+public class TimeHelper {
 
-	public static boolean hasTimeExpired(long startTime, long duration, long currentTime) {
+	public static boolean hasDurationExpired(long startTime, long duration, long currentTime) {
 
 		long elapsedTime = currentTime - startTime;
 
@@ -15,7 +15,6 @@ public class TimeUtil {
 		}
 
 		return true;
-
 	}
 
 	public static long getServerTicks() {
@@ -23,5 +22,4 @@ public class TimeUtil {
 		WorldServer overworld = server.getWorld(0);
 		return overworld.getTotalWorldTime();
 	}
-
 }

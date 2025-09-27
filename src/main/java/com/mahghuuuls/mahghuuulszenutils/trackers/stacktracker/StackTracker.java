@@ -1,22 +1,22 @@
-package com.mahghuuuls.mahghuuulszenutils.core.stacktracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.stacktracker;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-import com.mahghuuuls.mahghuuulszenutils.core.utils.TimeUtil;
+import com.mahghuuuls.mahghuuulszenutils.helpers.TimeHelper;
 
 public class StackTracker {
 
-	private static final Map<StackTrackerKey, StackTrackerData> activeStacks = new HashMap<>();
+	private static final ConcurrentMap<StackTrackerKey, StackTrackerData> activeStacks = new ConcurrentHashMap<>();
 
-	public static void addStacks(String ownerId, String stackName, long durationTicks, RefreshRule refreshRule,
-			int stackQuantity) {
+	public static void addStacks(String ownerId, String stackName, long stackQuantity, RefreshRule refreshRule,
+			long durationTicks) {
 
 		if (ownerId == null || stackName == null) {
 			return;
 		}
 
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 		StackTrackerKey key = new StackTrackerKey(ownerId, stackName);
 		StackTrackerData data = activeStacks.get(key);
 
@@ -25,11 +25,18 @@ public class StackTracker {
 			data = null;
 		}
 
+		if (data == null && stackQuantity <= 0) {
+			return;
+		}
+
 		if (data == null) {
-			StackTrackerData newData = new StackTrackerData(stackQuantity, currentTime, durationTicks);
+
+			StackTrackerData newData = new StackTrackerData((int) stackQuantity, currentTime, durationTicks);
+
 			if (!newData.isExpired(currentTime)) {
 				activeStacks.put(key, newData);
 			}
+
 			return;
 		}
 
@@ -55,6 +62,7 @@ public class StackTracker {
 		case PRESERVE:
 			break;
 		default:
+			// TODO Add warning log
 			break;
 		}
 
@@ -80,7 +88,7 @@ public class StackTracker {
 			return 0;
 		}
 
-		long currentTime = TimeUtil.getServerTicks();
+		long currentTime = TimeHelper.getServerTicks();
 		StackTrackerKey key = new StackTrackerKey(ownerId, stackName);
 		StackTrackerData data = activeStacks.get(key);
 

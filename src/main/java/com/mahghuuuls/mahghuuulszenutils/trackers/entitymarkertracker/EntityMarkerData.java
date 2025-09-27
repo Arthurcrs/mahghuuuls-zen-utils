@@ -1,4 +1,4 @@
-package com.mahghuuuls.mahghuuulszenutils.core.entitymarkertracker;
+package com.mahghuuuls.mahghuuulszenutils.trackers.entitymarkertracker;
 
 public class EntityMarkerData {
 	public long durationTicks;
@@ -8,5 +8,4 @@ public class EntityMarkerData {
 		this.durationTicks = durationTicks;
 		this.startTime = startTime;
 	}
-
 }
